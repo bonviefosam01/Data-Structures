@@ -1,0 +1,106 @@
+object homework extends eecs.cs384 {
+
+  def userName = "Bonvie Fosam"
+
+  // DOCUMENTATION SIGNATURE BLOCK GOES HERE
+  // Visit the syllabus for more information:
+  // https://eecscourses.westpoint.edu/courses/cs384/#documentation
+  //CDT Joshua Heiman. 26 January 2021. Assistance given to the author, verbal discussion.
+  //CDT Joshua Heiman reminded me that the size of the size of the array must be defined when
+  //creating an array in scala. He then advised me that using a count to find proper array
+  //size would be helpful. I applied this tip to problems two and four, and was able to solve
+  //them on my own thereafter. AY21-2. West Point, NY.
+
+
+  def sumArrayItemsDivisibleByX(array: Array[Int], x: Int): Int = {
+    var sum = 0
+    for (i <- 0 until array.length){
+      if (array(i) % x == 0){
+        sum += array(i)
+      }
+    }
+    sum
+  }
+  /*sumArrayItemsDivisibleByX()*/
+  test("sumArrayItemsDivisibleByX", sumArrayItemsDivisibleByX _, "array", "x")
+
+  def evensAndOdds(array: Array[Int]): (Array[Int], Array[Int]) = {
+    var counteven = 0
+    var countodd = 0
+    var locationeven = 0
+    var locationodd = 0
+    for (i <- 0 until array.length){
+      if (array(i) % 2 == 0){
+        counteven += 1
+      }
+      if (array(i) % 2 != 0){
+        countodd += 1
+      }
+    }
+    val evens = Array.fill[Int](counteven)(0)
+    val odds = Array.fill[Int](countodd)(0)
+    for (i <- 0 until array.length){
+      if (array(i) % 2 == 0){
+        evens(locationeven) = array(i)
+        locationeven += 1
+      }
+      if (array(i) % 2 != 0){
+        odds(locationodd) = array(i)
+        locationodd += 1
+      }
+    }
+    (evens , odds)
+  }
+  // Change `ignoretest` to `test` when you are ready to test
+  test("evensAndOdds", evensAndOdds _, "array")
+
+  def productOfMinimumAndMaximum(array: Array[Int]): Int = {
+    val mini = array.min
+    val maxi = array.max
+    val product = mini * maxi
+    product
+  }
+  // Change `ignoretest` to `test` when you are ready to test
+  test(
+    "productOfMinimumAndMaximum",
+    productOfMinimumAndMaximum _,
+    "array"
+  )
+
+  def longestSequenceOfConsecutiveElements(array: Array[Int]): Array[Int] = {
+    var mainlengthcounter = 0
+    var templengthcounter = 0
+    var mainindexposition = 0
+    var tempindexposition = 0
+    if (array.length != 0){
+      templengthcounter = 1
+    }
+    for (i <- 1 until array.length){
+      if(array(i - 1) + 1 == array(i)){
+        templengthcounter += 1
+      } else {
+        if (templengthcounter > mainlengthcounter){
+          mainindexposition = tempindexposition
+          mainlengthcounter = templengthcounter
+        }
+        tempindexposition = i
+        templengthcounter = 1
+      }
+    }
+    if (templengthcounter > mainlengthcounter){
+      mainindexposition = tempindexposition
+      mainlengthcounter = templengthcounter
+    }
+    val longestSeq = Array.fill[Int](mainlengthcounter)(0)
+    for (i <- mainindexposition until mainindexposition + mainlengthcounter){
+      longestSeq(i - mainindexposition) = array(i)
+    }
+    longestSeq
+  }
+  // Change `ignoretest` to `test` when you are ready to test
+  test(
+    "longestSequenceOfConsecutiveElements",
+    longestSequenceOfConsecutiveElements _,
+    "array"
+  )
+}
